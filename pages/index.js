@@ -1,9 +1,14 @@
-import Head from 'next/head'
+import Layout from '../components/layout/Layout'
+import styles from '../styles/Home.module.css'
 
-export default function Home() {
+const Home =() => {
   return (
     <div>
-      <h1>Hello!</h1>
+      <Layout>
+        <h1 className={styles.heading}>Hello!</h1>
+      </Layout>
     </div>
   )
 }
+
+export default Home
