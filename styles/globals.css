@@ -1,7 +1,9 @@
 :root {
   --gray1: #3d3d3d;
   --gray2: #6f6f6f;
-  --orange: #da552f
+  --gray3: #e1e1e1;
+  --gray4: #d1d1d1;
+  --orange: #da552f;
 }
 
 html {

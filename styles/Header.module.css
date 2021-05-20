@@ -1,6 +1,27 @@
 .header {
-    border-bottom: 2px solid #e1e1e1;
+    border-bottom: 2px solid var(--gray3);
     padding: 1rem 0;
-    background-color: blue
 }
 
+.container {
+    max-width: 1200px;
+    width: 95%;
+    margin: 0 auto;
+}
+
+@media screen and (min-width: 768px) {
+    .container {
+        display: flex;
+        justify-content: space-between;
+    }
+}
+
+.head {
+    display: flex;
+    align-items: center;
+}
+
+.buttons {
+    display: flex;
+    align-items: center;
+}

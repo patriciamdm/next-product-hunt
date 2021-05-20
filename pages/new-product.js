@@ -1,13 +1,13 @@
 import Layout from '../components/layout/Layout'
 
-const Home =() => {
+const NewProduct =() => {
   return (
     <div>
       <Layout>
-        <h1>Hello!</h1>
+        <h1>New product</h1>
       </Layout>
     </div>
   )
 }
 
-export default Home
+export default NewProduct
