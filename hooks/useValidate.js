@@ -25,7 +25,7 @@ const useValidate = (initialState, validate, fn) => {
         setSubmitForm(true)
     }
 
-    return { values, errors, submitForm, handleChange, handleSubmit }
+    return { values, errors, handleChange, handleSubmit }
 
 }
 
