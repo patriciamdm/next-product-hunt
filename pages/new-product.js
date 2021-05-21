@@ -1,9 +1,9 @@
-import React, { useState } from 'react'
-import Router from 'next/router'
+import React, { useState, useContext } from 'react'
+import Router, {useRouter} from 'next/router'
 
 import Layout from '../components/layout/Layout'
 import { Form, Field, InputSubmit, ErrorMsg } from '../components/shared/Form'
-import firebase from '../firebase'
+import {FirebaseContext} from '../firebase'
 
 import useValidate from '../hooks/useValidate'
 import validateNewProduct from '../validate/validateNewProduct'
@@ -20,19 +20,32 @@ const initialState = {
 const NewProduct =() => {
 
   const [errorMsg, setErrorMsg] = useState(false)
+
+  const { user, firebase } = useContext(FirebaseContext)
+  const router = useRouter()
   
   const { values, errors, handleChange, handleSubmit } = useValidate(initialState, validateNewProduct, createProduct)
   const { name, company, image, url, description } = values
-  
-  async function createProduct() { }
-  //   try {
-  //     await firebase.signup(name, email, password)
-  //     Router.push('/')
-  //   } catch (err) {
-  //     console.error('There was an error creating user:', err.message)
-  //     setErrorMsg(err.message)
-  //   }
 
+  
+  async function createProduct() {
+    if (!user) router.push('/log-in')
+
+    const product = {
+      name, company, url, description, votes: 0, comments: [], created: Date.now()
+    }
+
+    firebase.db.collection('products').add(product)
+    
+    //   try {
+      //     await firebase.signup(name, email, password)
+      //     Router.push('/')
+      //   } catch (err) {
+        //     console.error('There was an error creating user:', err.message)
+        //     setErrorMsg(err.message)
+        //   }
+  }
+        
   return (
     <div>
       <Layout>
