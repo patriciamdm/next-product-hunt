@@ -1,5 +1,6 @@
 import React, { useState, useContext } from 'react'
 import Router, {useRouter} from 'next/router'
+import FileUploader from 'react-firebase-file-uploader'
 
 import Layout from '../components/layout/Layout'
 import { Form, Field, InputSubmit, ErrorMsg } from '../components/shared/Form'
@@ -19,6 +20,11 @@ const initialState = {
 
 const NewProduct =() => {
 
+  const [imgName, setImgName] = useState('')
+  const [upload, setUpload] = useState(false)
+  const [progress, setProgress] = useState(0)
+  const [imgUrl, setImgUrl] = useState('')
+
   const [errorMsg, setErrorMsg] = useState(false)
 
   const { user, firebase } = useContext(FirebaseContext)
@@ -27,23 +33,36 @@ const NewProduct =() => {
   const { values, errors, handleChange, handleSubmit } = useValidate(initialState, validateNewProduct, createProduct)
   const { name, company, image, url, description } = values
 
-  
   async function createProduct() {
     if (!user) router.push('/log-in')
-
     const product = {
-      name, company, url, description, votes: 0, comments: [], created: Date.now()
+      name, company, url, image: imgUrl, description, votes: 0, comments: [], created: Date.now()
     }
-
     firebase.db.collection('products').add(product)
-    
-    //   try {
-      //     await firebase.signup(name, email, password)
-      //     Router.push('/')
-      //   } catch (err) {
-        //     console.error('There was an error creating user:', err.message)
-        //     setErrorMsg(err.message)
-        //   }
+    return router.push('/')
+  }
+
+  const handleUploadStart = () => {
+    setProgress(0)
+    setUpload(true)
+  }
+
+  const handleProgress = progress => setProgress({ progress })
+  
+  const handleUploadError = err => {
+    setProgress(err)
+    console.error(err)
+  }
+
+  const handleUploadSuccess = name => {
+    setProgress(100)
+    setUpload(false)
+    setImgName(name)
+    firebase.storage
+      .ref('products')
+      .child(name)
+      .getDownloadURL()
+      .then(url => setImgUrl(url))
   }
         
   return (
@@ -68,11 +87,11 @@ const NewProduct =() => {
               </Field>
               {errors.company && <ErrorMsg>{errors.company}</ErrorMsg>}
               
-              {/* <Field>
+              <Field>
                 <label htmlFor="image">Image</label>
-                <input type="file" id="image" name="image" value={image} onChange={handleChange} />
+                <FileUploader accept="image/*" id="image" name="image" randomizeFilename storageRef={firebase.storage.ref('products')}
+                  onUploadStart={handleUploadStart} onUploadError={handleUploadError} onUploadSuccess={handleUploadSuccess} onProgress={handleProgress} />
               </Field>
-              {errors.image && <ErrorMsg>{errors.image}</ErrorMsg>} */}
               
               <Field>
                 <label htmlFor="url">URL</label>
