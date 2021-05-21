@@ -1,6 +1,8 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Link from 'next/link'
 import styled from '@emotion/styled'
+import {FirebaseContext} from '../../firebase'
+
 
 
 const Nav = styled.nav`
@@ -20,11 +22,15 @@ const Nav = styled.nav`
 
 
 const Navbar = () => {
+
+        const {user} = useContext(FirebaseContext)
+
+
     return (
         <Nav>
             <Link href="/">Home</Link>
             <Link href="/populars">Populars</Link>
-            <Link href="/new-product">New product</Link>
+            {user && <Link href="/new-product">New product</Link>}
         </Nav>
     )
 }

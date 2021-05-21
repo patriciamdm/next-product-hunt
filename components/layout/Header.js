@@ -1,7 +1,9 @@
-import React from 'react'
+import React, {useContext} from 'react'
 import Link from 'next/link'
 import styles from '../../styles/Header.module.css'
 import styled from '@emotion/styled'
+
+import {FirebaseContext} from '../../firebase'
 
 import Search from '../shared/Search'
 import Button from '../shared/Button'
@@ -20,7 +22,7 @@ const Logo = styled.p`
 
 const Header = () => {
 
-    const user = false
+    const {user, firebase} = useContext(FirebaseContext)
 
     return (
         <header className={styles.header}>
@@ -34,8 +36,8 @@ const Header = () => {
                     {user
                         ?
                         (<>
-                            <p style={{marginRight: '2rem'}}>Hola: user</p>
-                            <Button bgColor="true">Log out</Button>
+                            <p style={{ marginRight: '2rem' }}>Hola: {user.displayName}</p>
+                            <Button bgColor="true" onClick={() => firebase.logout()}>Log out</Button>
                         </>)
                         :
                         (<>

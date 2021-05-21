@@ -1,7 +1,9 @@
-import React from 'react'
+import React, { useState } from 'react'
+import Router from 'next/router'
+
 import Layout from '../components/layout/Layout'
 import { Form, Field, InputSubmit, ErrorMsg } from '../components/shared/Form'
-
+import firebase from '../firebase'
 
 import useValidate from '../hooks/useValidate'
 import validateNewAccount from '../validate/validateNewAccount'
@@ -14,11 +16,21 @@ const initialState = {
 
 
 const SignUp = () => {
-  
-  const createAccount = () => console.log('Creating account')
+
+  const [errorMsg, setErrorMsg] = useState(false)
   
   const { values, errors, handleChange, handleSubmit } = useValidate(initialState, validateNewAccount, createAccount)
   const { name, email, password } = values
+  
+  async function createAccount() {
+    try {
+      await firebase.signup(name, email, password)
+      Router.push('/')
+    } catch (err) {
+      console.error('There was an error creating user:', err.message)
+      setErrorMsg(err.message)
+    }
+  }
 
   return (
     <div>
@@ -44,6 +56,8 @@ const SignUp = () => {
               <input type="password" id="password" placeholder="Your password" name="password" value={password} onChange={handleChange} />
             </Field>
             {errors.password && <ErrorMsg>{errors.password}</ErrorMsg>}
+            
+            {errorMsg && <ErrorMsg>{errorMsg}</ErrorMsg>}
 
             <InputSubmit type="submit" value="Create account" />
           </Form>
