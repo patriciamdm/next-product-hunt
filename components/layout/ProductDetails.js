@@ -1,5 +1,6 @@
 import React from 'react'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
+import Link from 'next/link'
 import styles from '../../styles/ProductDetails.module.css'
 import styled from '@emotion/styled'
 
@@ -50,7 +51,7 @@ const ProductDetails = ({ product }) => {
                     <img style={{ width: '200px' }} src={image}/>
                 </figure>
                 <figcaption>
-                    <Title>{name}</Title>
+                    <Link href="/products/[id]" as={`/products/${id}`}><Title>{name}</Title></Link>
                     <p className={styles.text}>{description}</p>
                     <Comments>
                         <figure>
