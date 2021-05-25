@@ -10,7 +10,7 @@ import Button from '../shared/Button'
 import Navbar from './Navbar'
 
 
-const Logo = styled.p`
+const Logo = styled.a`
     color: var(--orange);
     font-size: 4rem;
     line-height: 0;

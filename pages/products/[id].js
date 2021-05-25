@@ -99,6 +99,22 @@ const Product = () => {
 
     const isCreator = id => (creator.id == id) ? true : false
 
+    const canDelete = () => {
+        if (!user) return false
+        if (creator.id === user.uid) return true
+    }
+
+    const deleteProduct = async () => {
+        if (!user) router.push('/log-in')
+        if (creator.id !== user.uid) router.push('/')
+        try {
+            await firebase.db.collection('products').doc(id).delete()
+            router.push('/')
+        } catch (err) {
+            console.error('There was an error:', err.message)
+        }
+    }
+
 
     if (error) return <Layout><Error404 text="Product doesn't exist." /></Layout>
     else if (Object.keys(product).length === 0) return <Layout><h2 style={{marginTop: '5rem', textAlign: 'center'}}>Loading product...</h2></Layout>
@@ -148,6 +164,7 @@ const Product = () => {
                             {(user && errorMsg) && <ErrorMsg>{errorMsg}</ErrorMsg>}
                             {user && <Button onClick={voteProduct} >Vote</Button>}
                         </div>
+                        {canDelete() && <Button bgColor="true" onClick={deleteProduct}>Delete product</Button>}
                     </aside>
                 </ProdContainer>
             </>
