@@ -34,9 +34,14 @@ const Search = () => {
       <Layout>
         <section style={{ backgroundColor: 'var(--gray5)' }}>
           <Container>
-            <ul style={{ backgroundColor: 'white' }}>
-            {displayProds.map(elm => <ProductCard key={elm.id} product={elm}/>)}
-            </ul>
+            {displayProds.length === 0
+              ?
+              <p>No products found.</p>
+              :
+              <ul style={{ backgroundColor: 'white' }}>
+                {displayProds.map(elm => <ProductCard key={elm.id} product={elm}/>)}
+              </ul>
+            }
           </Container>
         </section>
       </Layout>
