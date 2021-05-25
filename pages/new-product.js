@@ -37,7 +37,7 @@ const NewProduct =() => {
   async function createProduct() {
     if (!user) router.push('/log-in')
     const product = {
-      name, company, url, image: imgUrl, description, votes: [], comments: [], created: Date.now(), creator: {id: user.uid, name: user.displayName}
+      name, company, url, image: imgUrl, description, votes: 0, voters: [], comments: [], created: Date.now(), creator: {id: user.uid, name: user.displayName}
     }
     firebase.db.collection('products').add(product)
     return router.push('/')

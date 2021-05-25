@@ -47,7 +47,7 @@ const Product = () => {
     const [errorMsg, setErrotMsg] = useState(false)
     const [comment, setComment] = useState({})
 
-    const { comments, created, company, name, description, image, url, votes, creator } = product
+    const { comments, created, company, name, description, image, url, votes, creator, voters } = product
 
     const { firebase, user } = useContext(FirebaseContext)
     const router = useRouter()
@@ -73,14 +73,15 @@ const Product = () => {
 
     const voteProduct = () => {
         if (!user) router.push('/log-in')
-        if (votes.includes(user.uid)) {
+        if (voters.includes(user.uid)) {
             setErrotMsg('You already voted this product')
             setTimeout(() => setErrotMsg(false), 2500)
             return
         }
-        const newVotes = [...votes, user.uid]
-        firebase.db.collection('products').doc(id).update({votes: newVotes})
-        setProduct({ ...product, votes: newVotes })
+        const newVotes = votes +1
+        const newVoters = [...voters, user.uid]
+        firebase.db.collection('products').doc(id).update({votes: newVotes, voters: newVoters})
+        setProduct({ ...product, votes: newVotes, voters: newVoters })
         setCheckDB(true)
     }
 
@@ -160,7 +161,7 @@ const Product = () => {
                         <p>By: {creator.name} from {company}</p>
                         <Button target="_blank" bgColor="true" href={url}>Visit URL</Button>
                         <div style={{ marginTop: '5rem' }}>
-                            <p style={{ textAlign: 'center' }}>{votes.length} votes</p>
+                            <p style={{ textAlign: 'center' }}>{votes} votes</p>
                             {(user && errorMsg) && <ErrorMsg>{errorMsg}</ErrorMsg>}
                             {user && <Button onClick={voteProduct} >Vote</Button>}
                         </div>

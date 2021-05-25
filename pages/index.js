@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { FirebaseContext } from '../firebase'
+import React from 'react'
 import styled from '@emotion/styled'
 
+import useProducts from '../hooks/useProducts'
 import Layout from '../components/layout/Layout'
 import ProductCard from '../components/layout/ProductCard'
 
@@ -16,25 +16,7 @@ margin: 0 auto;
 
 const Home = () => {
   
-  const [products, setProducts] = useState([])
-
-  const { firebase } = useContext(FirebaseContext)
-  
-  useEffect(() => {
-    const getProducts = () => firebase.db.collection('products').orderBy('created', 'desc').onSnapshot(manageSnapshot)
-    getProducts()
-    // eslint-disable-line
-  }, [])
-
-  function manageSnapshot(snap) {
-    const products = snap.docs.map(doc => {
-      return {
-        id: doc.id,
-        ...doc.data()
-      }
-    })
-    setProducts(products)
-  }
+  const {products} = useProducts('created')
 
   return (
     <div>

@@ -65,7 +65,7 @@ const ProductCard = ({ product }) => {
 
             <section className={styles.votes}>
                 <div sytle={{fontSize: '2rem'}}>&#9650;</div>
-                <p className={styles.votesn}>{votes.length}</p>
+                <p className={styles.votesn}>{votes}</p>
             </section>
         </li>
     )
