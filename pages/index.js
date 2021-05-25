@@ -16,7 +16,7 @@ margin: 0 auto;
 
 const Home = () => {
   
-  const {products} = useProducts('created')
+  const { products } = useProducts('created')
 
   return (
     <div>
