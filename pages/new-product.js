@@ -2,9 +2,10 @@ import React, { useState, useContext } from 'react'
 import Router, {useRouter} from 'next/router'
 import FileUploader from 'react-firebase-file-uploader'
 
-import Layout from '../components/layout/Layout'
-import { Form, Field, InputSubmit, ErrorMsg } from '../components/shared/Form'
 import {FirebaseContext} from '../firebase'
+import Layout from '../components/layout/Layout'
+import Error404 from '../components/shared/404'
+import { Form, Field, InputSubmit, ErrorMsg } from '../components/shared/Form'
 
 import useValidate from '../hooks/useValidate'
 import validateNewProduct from '../validate/validateNewProduct'
@@ -36,7 +37,7 @@ const NewProduct =() => {
   async function createProduct() {
     if (!user) router.push('/log-in')
     const product = {
-      name, company, url, image: imgUrl, description, votes: 0, comments: [], created: Date.now()
+      name, company, url, image: imgUrl, description, votes: [], comments: [], created: Date.now(), creator: {id: user.uid, name: user.displayName}
     }
     firebase.db.collection('products').add(product)
     return router.push('/')
@@ -64,6 +65,8 @@ const NewProduct =() => {
       .getDownloadURL()
       .then(url => setImgUrl(url))
   }
+
+  if (!user) return <Layout><Error404 text="Page not available." /></Layout>
         
   return (
     <div>

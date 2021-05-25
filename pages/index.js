@@ -3,7 +3,7 @@ import { FirebaseContext } from '../firebase'
 import styled from '@emotion/styled'
 
 import Layout from '../components/layout/Layout'
-import ProductDetails from '../components/layout/ProductDetails'
+import ProductCard from '../components/layout/ProductCard'
 
 
 const Container = styled.article`
@@ -42,7 +42,7 @@ const Home = () => {
         <section style={{ backgroundColor: 'var(--gray5)' }}>
           <Container>
             <ul style={{ backgroundColor: 'white' }}>
-            {products.map(elm => <ProductDetails key={elm.id} product={elm}/>)}
+            {products.map(elm => <ProductCard key={elm.id} product={elm}/>)}
             </ul>
           </Container>
         </section>

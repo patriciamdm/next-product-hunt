@@ -1,7 +1,7 @@
 import React from 'react'
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 import Link from 'next/link'
-import styles from '../../styles/ProductDetails.module.css'
+import styles from '../../styles/ProductCard.module.css'
 import styled from '@emotion/styled'
 
 
@@ -40,7 +40,7 @@ const Comments = styled.div`
 `
 
 
-const ProductDetails = ({ product }) => {
+const ProductCard = ({ product }) => {
     
     const { id, comments, created, company, name, description, image, url, votes } = product
 
@@ -48,7 +48,7 @@ const ProductDetails = ({ product }) => {
         <li className={styles.product}>
             <section className={styles.description}>
                 <figure style={{margin: '0'}}>
-                    <img style={{ width: '200px' }} src={image}/>
+                    <img style={{ width: '200px', height: '200px' }} src={image}/>
                 </figure>
                 <figcaption>
                     <Link href="/products/[id]" as={`/products/${id}`}><Title>{name}</Title></Link>
@@ -65,10 +65,10 @@ const ProductDetails = ({ product }) => {
 
             <section className={styles.votes}>
                 <div sytle={{fontSize: '2rem'}}>&#9650;</div>
-                <p className={styles.votesn}>{votes}</p>
+                <p className={styles.votesn}>{votes.length}</p>
             </section>
         </li>
     )
 }
 
-export default ProductDetails
+export default ProductCard
