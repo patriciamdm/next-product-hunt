@@ -37,7 +37,7 @@ const Search = () => {
           <Container>
             {displayProds.length === 0
               ?
-              <Error404 text={`No products found with provided keyword: ${q}`} />
+              <Error404 text="No products found with provided keyword" />
               :
               <ul style={{ backgroundColor: 'white' }}>
                 {displayProds.map(elm => <ProductCard key={elm.id} product={elm}/>)}
