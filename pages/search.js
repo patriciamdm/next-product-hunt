@@ -5,7 +5,7 @@ import styled from '@emotion/styled'
 import useProducts from '../hooks/useProducts'
 import Layout from '../components/layout/Layout'
 import ProductCard from '../components/layout/ProductCard'
-import Error404 from '../../components/shared/404'
+import Error404 from '../components/shared/404'
 
 
 const Container = styled.article`
