@@ -5,6 +5,7 @@ import styled from '@emotion/styled'
 import useProducts from '../hooks/useProducts'
 import Layout from '../components/layout/Layout'
 import ProductCard from '../components/layout/ProductCard'
+import Error404 from '../../components/shared/404'
 
 
 const Container = styled.article`
@@ -36,7 +37,7 @@ const Search = () => {
           <Container>
             {displayProds.length === 0
               ?
-              <p>No products found.</p>
+              <Error404 text={`No products found with keyword ${q}`} />
               :
               <ul style={{ backgroundColor: 'white' }}>
                 {displayProds.map(elm => <ProductCard key={elm.id} product={elm}/>)}
